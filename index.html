@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CaroBot - Intelligent Companion Robot</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', '微軟正黑體', sans-serif;
+    }
+    
+    :root {
+      --primary: #ff7e5f;
+      --secondary: #feb47b;
+      --accent: #4da9ff;
+      --light: #fff9f5;
+      --dark: #2d3e50;
+      --text: #333;
+      --bg-cream: #fef6eb;
+    }
+    
+    body {
+      background-color: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    header {
+      background: var(--bg-cream);
+      color: var(--dark);
+      padding: 2rem 0;
+      text-align: center;
+    }
+    
+    .logo {
+      font-size: 4rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+    
+    .tagline {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+    
+    .sub-tagline {
+      font-size: 1.2rem;
+      color: var(--dark);
+    }
+    
+    nav {
+      background-color: var(--dark);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 1rem 1.5rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    nav a:hover {
+      background-color: var(--primary);
+    }
+    
+    /* 語言轉換下拉式選單的樣式 */
+    .language-dropdown {
+      position: relative;
+      display: inline-block;
+      margin-right: 1rem;
+    }
+    
+    .dropbtn {
+      background-color: var(--dark);
+      color: white;
+      padding: 0.5rem 1rem;
+      font-size: 1.0rem;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: var(--dark);
+      min-width: 120px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    
+    .dropdown-content a {
+      color: white;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      display: block;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: var(--primary);
+    }
+    
+    .language-dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      padding-right: 1rem;
+    }
+    
+    .cta-button {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .cta-button:hover {
+      background-color: #3d8de0;
+      transform: translateY(-2px);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .hero {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+      background-color: var(--bg-cream);
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    
+    .hero-image {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    .hero-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    
+    .hero-content {
+      flex: 1;
+      min-width: 300px;
+      padding: 2rem;
+    }
+    
+    .hero-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+    
+    .hero-text {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .banner {
+      width: 100%;
+      background-color: var(--bg-cream);
+      text-align: center;
+      padding: 3rem 0;
+      margin-bottom: 2rem;
+    }
+    
+    .banner img {
+      max-width: 80%;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+      border-radius: 10px;
+    }
+    
+    .features {
+      padding: 4rem 0;
+      background-color: white;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 3rem;
+      color: var(--primary);
+    }
+    
+    .features-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 2rem;
+    }
+    
+    .feature-card {
+      flex: 1;
+      min-width: 250px;
+      max-width: 350px;
+      background-color: var(--light);
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+      text-align: center;
+    }
+    
+    .feature-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+      text-align: center;
+    }
+    
+    .feature-text {
+      text-align: center;
+    }
+    
+    .subscription {
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: white;
+      padding: 4rem 0;
+    }
+    
+    .subscription-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 2rem;
+    }
+    
+    .plan-card {
+      flex: 1;
+      min-width: 250px;
+      max-width: 350px;
+      background-color: white;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .plan-title {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      text-align: center;
+    }
+    
+    .plan-price {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      color: var(--dark);
+      text-align: center;
+    }
+    
+    .plan-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+    
+    .plan-features li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .plan-features li:before {
+      content: "✓";
+      color: var(--accent);
+      margin-right: 0.5rem;
+    }
+    
+    .testimonials {
+      padding: 4rem 0;
+      background-color: var(--light);
+    }
+    
+    .testimonial-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+    
+    .testimonial-author {
+      font-weight: bold;
+      color: var(--primary);
+    }
+    
+    .video-section {
+      margin: 3rem 0;
+      text-align: center;
+    }
+      
+    .video-section .section-title {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .video-section video {
+      width: 100%;
+      max-width: 800px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .contact {
+      background-color: var(--dark);
+      color: white;
+      padding: 4rem 0;
+    }
+    
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 5px;
+    }
+    
+    textarea.form-input {
+      min-height: 150px;
+    }
+    
+    footer {
+      background-color: #1a2530;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    .social-icons {
+      margin: 1rem 0;
+    }
+    
+    .social-icons a {
+      color: white;
+      font-size: 1.5rem;
+      margin: 0 0.5rem;
+      text-decoration: none;
+    }
+    
+    /* 新增 QR Code 欄位的樣式 */
+    .qr-code-section {
+      background-color: #f4f4f4;
+      padding: 3rem 0;
+      text-align: center;
+    }
+    
+    .qr-code-section h2 {
+      font-size: 2rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+    
+    .qr-code-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 3rem;
+      padding: 1rem;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+    
+    .qr-code-container img {
+      width: 220px;
+      height: auto;
+    }
+    
+    @media screen and (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+      }
+      
+      nav ul {
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      .nav-cta {
+        padding: 1rem;
+        justify-content: center;
+      }
+      
+      .hero {
+        flex-direction: column;
+      }
+      
+      .hero-content {
+        order: 1;
+      }
+      
+      .hero-image {
+        order: 2;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">CaroBot</div>
+    <div class="tagline">From playtime to bedtime, from safety to empathy, CaroBot is more than a machine — <br>
+      it’s the heartbeat of a smarter, more loving home.<br>
+       </div>
+    <div class="sub-tagline">CaroBot — Because real care begins at home.<br>
+       </div>
+  </header>
+  
+  <nav>
+    <div class="nav-container">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#qr-code">QR Code</a></li>
+        <li><a href="#subscription">Subscription</a></li>
+        <li><a href="#testimonials">Review</a></li>
+        <li><a href="#video">Video</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- 新增語言轉換下拉式選單 -->
+      <div class="language-dropdown">
+        <button class="dropbtn">language ▼</button>
+        <div class="dropdown-content">
+          <a href="index-en.html">English</a>
+          <a href="index-zh.html">Mandarin</a>
+          <a href="index-ja.html">Japanese</a>
+          <a href="index-ar.html">العربية</a>
+          <a href="index-ko.html">한국어</a>
+          <a href="index-de.html">Deutsch</a>
+          <a href="index-de.html">Cantonese</a>
+        </div>
+      </div>
+      <div class="nav-cta">
+        <button class="cta-button" style="width: 100%; font-size: 0.9rem;">Experience Now</button>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- 第一個 Hero 區塊 -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h2 class="hero-title">Meet CaroBot — The only family member who never complains, never gets tired, and never forgets grandma’s pills. 😄</h2>
+      <p class="hero-text">「Whether it’s reading bedtime stories, reminding dad to stretch his back, or teaching your kid to say “thank you” in five languages, CaroBot’s got your family covered — 24/7.<br>
+        <br>
+        Powered by empathy, driven by AI, and fueled by love (and maybe just a little electricity⚡), CaroBot is the next big thing in home care.<br>
+        <br>
+        'cause Siri can’t give hugs. CaroBot can.」
+      </p>
+      <button class="cta-button" style="width: 100%; font-size: 0.9rem;">Learn More</button>
+    </div>
+    <div class="hero-image">
+      <img src="/Users/user/Library/Mobile Documents/com~apple~CloudDocs/國立高雄科技大學/11302/商品展覽介紹/Assignments/product 2/Peggy group CaroBot image.png" alt="CaroBot陪伴機器人與長者及兒童互動" width="600" height="990">
+    </div>
+  </section>
+  
+  <!-- 第二個 Hero 區塊：在「您家中的智能好夥伴」下方，了解更多按鈕點擊後跳轉至 smart-companion.html -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h2 class="hero-title">“📝 CaroBot: The Smartest Hug at Home.”</h2>
+      <p class="hero-text">
+        ✔ Dual-mode design for both kids and elders<br>
+        ✔ 24/7 monitoring and emotional interaction<br>
+        ✔ AI-powered storytelling, reminder, and medical tracking<br>
+        ✔ IoT integration for a connected smart home<br>
+        ✔ Personalizable interface and voice to match your family vibe<br>
+        <br>
+        📦 Coming soon – Let your loved ones be seen, heard, and never feel alone.
+      </p>
+      <a href="smart-companion.html" style="text-decoration: none; display: inline-block; width: 100%;">
+        <button class="cta-button" style="width: 100%; font-size: 0.9rem;">Learn More</button>
+      </a>
+    </div>
+    <div class="hero-image">
+      <img src="/Users/user/Library/Mobile Documents/com~apple~CloudDocs/國立高雄科技大學/11302/商品展覽介紹/Assignments/product 2/Peggy group CaroBot image1.png" alt="CaroBot功能展示" width="600" height="990">
+    </div>
+  </section>
+  
+  <section id="features" class="features">
+    <div class="container">
+      <h2 class="section-title">Features</h2>
+      <div class="features-container">
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3 class="feature-title">Target Users</h3>
+          <p class="feature-text">
+            • Parents with young children<br>
+            • Adult children caring for aging parents<br>
+            • Caregivers and busy households<br>
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🌍</div>
+          <h3 class="feature-title">Competitive Edge</h3>
+          <p class="feature-text">
+            • Dual-mode (👶 + 👵) design<br>
+            • Emotional recognition technology<br>
+            • Multilingual voice support<br>
+            • Always patient, never tired<br>
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🚀</div>
+          <h3 class="feature-title">Market Potential</h3>
+          <p class="feature-text">
+            • Global eldercare market<br>
+            • High demand in East Asia<br>
+            • Affordable caregiving solutions<br>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 新增 QR Code 區塊 -->
+  <section id="qr-code" class="qr-code-section">
+    <div class="container">
+      <h2 class="section-title">Scan the QR Code to discover more</h2>
+      <div class="qr-code-container">
+        <img src="/Users/user/Library/Mobile Documents/com~apple~CloudDocs/國立高雄科技大學/11302/商品展覽介紹/Assignments/product 2/配吉小助手QRcode.jpeg" alt="QR Code to CaroBot">
+        <img src="/Users/user/Library/Mobile Documents/com~apple~CloudDocs/國立高雄科技大學/11302/商品展覽介紹/Assignments/product 2/English grammar assistant QRcode.jpeg" alt="QR Code to CaroBot">
+        <img src="/Users/user/Library/Mobile Documents/com~apple~CloudDocs/國立高雄科技大學/11302/商品展覽介紹/Assignments/product 2/商務會議英文 QRcode.png" alt="QR Code to CaroBot">
+        <img src="/Users/user/Library/Mobile Documents/com~apple~CloudDocs/國立高雄科技大學/11302/商品展覽介紹/Assignments/product 2/商用英文書信 QRcode.png" alt="QR Code to CaroBot">
+      </div>
+    </div>
+  </section>
+
+  <section id="subscription" class="subscription">
+    <div class="container">
+      <h2 class="section-title" style="color: white;">Subscription</h2>
+      <div class="subscription-container">
+        <div class="plan-card">
+          <h3 class="plan-title">Basic</h3>
+          <div class="plan-price">NT$ 690<small>/mon</small></div>
+          <ul class="plan-features">
+            <li>Child Engagement Module</li>
+            <li>Elder Support Module</li>
+            <li>Voice Interaction Hub</li>
+            <li>Smart Safety Guardian</li>
+            <li>Health Insights Platform</li>
+          </ul>
+          <button class="cta-button" style="width: 100%; font-size: 1.0rem;">Subscribe</button>
+        </div>
+        
+        <div class="plan-card">
+          <h3 class="plan-title">Plus</h3>
+          <div class="plan-price">NT$ 1,190<small>/mon</small></div>
+          <ul class="plan-features">
+            <li>All basic functions</li>
+            <li>Academic Coaching</li>
+            <li>Fall detection& emergency alerts</li>
+            <li>Multilingual voice support</li>
+            <li>Facial recognition</li>
+          </ul>
+          <button class="cta-button" style="width: 100%; font-size: 1.0rem;">Subscribe</button>
+        </div>
+        
+        <div class="plan-card">
+          <h3 class="plan-title">Pro</h3>
+          <div class="plan-price">NT$ 1,990<small>/mon</small></div>
+          <ul class="plan-features">
+            <li>All plus functions</li>
+            <li>Smart scheduling & habit learning</li>
+            <li>Grammar Precision Toolkit</li>
+            <li>Encrypted Communication Vault</li>
+            <li>Concierge-Level Technical Support</li>
+          </ul>
+          <button class="cta-button" style="width: 100%; font-size: 1.0rem;">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="testimonials" class="testimonials">
+    <div class="container">
+      <h2 class="section-title">Review</h2>
+      
+      <div class="testimonial-card">
+        <p class="testimonial-text">"自從家中有了CaroBot，我不在家時也能放心許多。媽媽每天都能準時吃藥，而且CaroBot會陪她聊天，讓她不會感到寂寞。"</p>
+        <p class="testimonial-author">- 林小姐，照顧80歲母親的上班族</p>
+      </div>
+      
+      <div class="testimonial-card">
+        <p class="testimonial-text">"我的孩子們非常喜歡CaroBot！它不僅會說故事，還會幫助他們練習英語，而且能夠自動監測他們是否靠近危險區域，讓我能更安心地做家務。"</p>
+        <p class="testimonial-author">- 王太太，兩個孩子的母親</p>
+      </div>
+      
+      <div class="testimonial-card">
+        <p class="testimonial-text">"商務英文助手功能真的非常實用！我經常需要撰寫英文郵件，CaroBot不僅能幫我檢查文法，還能提供專業的商務用語建議，大大提高了我的工作效率。"</p>
+        <p class="testimonial-author">- 張先生，國際貿易公司經理</p>
+      </div>
+  </section>
+      
+  <section id="video" class="video"></section>
+     <div class="video-section">
+      <h3 class="section-title">Video</h3>
+           <video controls preload="metadata">
+            <source src="local_oqNbJcZ1xP_720p.MP4" type="video/mp4">
+        </div>
+
+       <div class="video-section">
+        <h3 class="section-title"></h3>
+          <video controls preload="metadata">
+           <source src="local_VWDLVkvHBc_720p.MP4" type="video/mp4">
+      </div>
+
+      <div class="video-section">
+        <h3 class="section-title"></h3>
+          <video controls preload="metadata">
+           <source src="local_xWkXcsVLP7_720p.MP4" type="video/mp4">
+      </div>
+    </div>
+  </section>
+  
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2 class="section-title" style="color: white;">Contact</h2>
+      <div class="contact-form">
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-input" placeholder="請輸入您的姓名">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-input" placeholder="請輸入您的電子郵件">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input type="tel" class="form-input" placeholder="請輸入您的電話號碼">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-input" placeholder="請輸入您的訊息或問題"></textarea>
+        </div>
+        
+        <button class="cta-button" style="width: 100%; font-size: 0.9rem;">Send</button>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <div class="container">
+      <p>© 2025 CaroBot 智能陪伴機器人。保留所有權利。</p>
+      <div class="social-icons">
+        <a href="#">FB</a>
+        <a href="#">IG</a>
+        <a href="#">LINE</a>
+        <a href="#">YT</a>
+      </div>
+      <p>地址：忠孝東路走九遍</p>
+      <p>電話：02-5201314</p>
+      <p>Email：info@carobot.com.tw</p>
+    </div>
+  </footer>
+</body>
+</html>
