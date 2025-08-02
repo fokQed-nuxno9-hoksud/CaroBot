@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投資組合簡報 - 5000萬元五年期規劃</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .section {
+            padding: 40px;
+            border-bottom: 1px solid #eee;
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+        .section h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+            padding-left: 20px;
+        }
+        .chart-container {
+            margin: 30px 0;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            margin: 20px 0;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        .info-card {
+            background: linear-gradient(135deg, #f6f9fc 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .info-card h3 {
+            color: #2c3e50;
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .allocation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .allocation-table th {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+        .allocation-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .allocation-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .allocation-table tr:hover {
+            background-color: #e3f2fd;
+        }
+        .score-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .score-4 { background: #27ae60; }
+        .score-3 { background: #f39c12; }
+        .risk-analysis {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>投資組合規劃簡報</h1>
+            <p>新台幣5000萬元 • 五年期投資策略 • 上櫃興櫃股票配置</p>
+        </div>
+
+        <div class="section">
+            <h2>一、總體經濟分析</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🌍 全球經濟展望</h3>
+                    <p>2024年全球經濟成長率為3.2%，與上年持平，但低於疫情前的平均水準。主要驅動因素包括通膨放緩、勞動市場壓力緩解和AI相關商品需求強勁。</p>
+                </div>
+                <div class="info-card">
+                    <h3>🇹🇼 台灣通膨預測</h3>
+                    <p>2025年台灣CPI年增率預估為1.95-1.99%，通膨情勢已有好轉，可望降至2%的通膨警戒線之下。能源與農產品價格穩定是通膨減壓的關鍵因素。</p>
+                </div>
+                <div class="info-card">
+                    <h3>💹 市場機會</h3>
+                    <p>AI技術發展、供應鏈改善、服務需求增加為主要成長動能。地緣政治風險雖然存在，但整體經濟展望趨於穩定。</p>
+                </div>
+                <div class="info-card">
+                    <h3>🔮 五年展望</h3>
+                    <p>預期2025-2029年間，台灣經濟將受惠於數位轉型、綠能轉型及AI產業發展，為相關產業帶來長期成長機會。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>二、產業分析</h2>
+            
+            <div class="chart-container">
+                <h3>產業配置比重</h3>
+                <div class="chart-wrapper">
+                    <canvas id="industryChart"></canvas>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🔬 科技產業 (50%)</h3>
+                    <p><strong>投資標的：</strong>元太科技、宜鼎、旺矽、友輝</p>
+                    <p><strong>成長動能：</strong>AI晶片需求、電子紙技術創新、記憶體市場復甦</p>
+                    <p>元太科技2025年Q1毛利、營業利益及淨利皆創歷年同期新高</p>
+                </div>
+                <div class="info-card">
+                    <h3>🌱 綠能產業 (30%)</h3>
+                    <p><strong>投資標的：</strong>崑鼎</p>
+                    <p><strong>成長趨勢：</strong>淨零碳排政策推動、再生能源需求增加、環保法規趨嚴</p>
+                    <p><strong>長期展望：</strong>配合政府2050淨零排放目標</p>
+                </div>
+                <div class="info-card">
+                    <h3>🍽️ 民生消費 (20%)</h3>
+                    <p><strong>投資標的：</strong>中華食、德麥</p>
+                    <p><strong>穩定特性：</strong>內需市場支撐、品牌價值、通膨受益概念</p>
+                    <p><strong>防禦性質：</strong>經濟波動下的穩定收益來源</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>三、投資組合配置</h2>
+            
+            <div class="highlight">
+                <h3>💰 投資總額：新台幣 50,000,000 元</h3>
+                <p>基於財報分析評分，採用差異化配置策略：4分股票配置20%、3分股票配置10%</p>
+            </div>
+
+            <table class="allocation-table">
+                <thead>
+                    <tr>
+                        <th>股票代號</th>
+                        <th>公司名稱</th>
+                        <th>產業別</th>
+                        <th>財報評分</th>
+                        <th>配置比重</th>
+                        <th>投資金額 (萬元)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>8069</td>
+                        <td>元太科技</td>
+                        <td>科技</td>
+                        <td><span class="score-badge score-4">4分</span></td>
+                        <td>20%</td>
+                        <td>1,000</td>
+                    </tr>
+                    <tr>
+                        <td>6803</td>
+                        <td>崑鼎</td>
+                        <td>綠能</td>
+                        <td><span class="score-badge score-4">4分</span></td>
+                        <td>20%</td>
+                        <td>1,000</td>
+                    </tr>
+                    <tr>
+                        <td>4205</td>
+                        <td>中華食</td>
+                        <td>民生</td>
+                        <td><span class="score-badge score-4">4分</span></td>
+                        <td>20%</td>
+                        <td>1,000</td>
+                    </tr>
+                    <tr>
+                        <td>5289</td>
+                        <td>宜鼎</td>
+                        <td>科技</td>
+                        <td><span class="score-badge score-3">3分</span></td>
+                        <td>10%</td>
+                        <td>500</td>
+                    </tr>
+                    <tr>
+                        <td>6223</td>
+                        <td>旺矽</td>
+                        <td>科技</td>
+                        <td><span class="score-badge score-3">3分</span></td>
+                        <td>10%</td>
+                        <td>500</td>
+                    </tr>
+                    <tr>
+                        <td>4933</td>
+                        <td>友輝</td>
+                        <td>科技</td>
+                        <td><span class="score-badge score-3">3分</span></td>
+                        <td>10%</td>
+                        <td>500</td>
+                    </tr>
+                    <tr>
+                        <td>1264</td>
+                        <td>德麥</td>
+                        <td>民生</td>
+                        <td><span class="score-badge score-3">3分</span></td>
+                        <td>10%</td>
+                        <td>500</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="chart-container">
+                <h3>投資配置圖表</h3>
+                <div class="chart-wrapper">
+                    <canvas id="allocationChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>投資金額分布</h3>
+                <div class="chart-wrapper">
+                    <canvas id="amountChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>四、風險分析與投資建議</h2>
+            
+            <div class="risk-analysis">
+                <h3>🎯 投資策略重點</h3>
+                <ul>
+                    <li><strong>分散投資：</strong>橫跨三大產業，降低單一產業風險</li>
+                    <li><strong>品質優先：</strong>選擇財報表現優異的標的</li>
+                    <li><strong>成長與穩定兼顧：</strong>科技成長搭配民生防禦</li>
+                    <li><strong>五年期規劃：</strong>配合長期趨勢布局</li>
+                </ul>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>⚠️ 主要風險</h3>
+                    <ul>
+                        <li>地緣政治不確定性</li>
+                        <li>利率政策變化</li>
+                        <li>上櫃興櫃流動性較低</li>
+                        <li>個股集中度風險</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>🛡️ 風險控管</h3>
+                    <ul>
+                        <li>定期檢視財報表現</li>
+                        <li>分批進場策略</li>
+                        <li>設定停損停利點</li>
+                        <li>密切關注產業動態</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>📈 預期報酬</h3>
+                    <ul>
+                        <li>年化報酬率目標：8-12%</li>
+                        <li>五年期總報酬：40-60%</li>
+                        <li>配息收益補強</li>
+                        <li>資本增值為主要獲利來源</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>🔄 調整機制</h3>
+                    <ul>
+                        <li>每季檢視配置比重</li>
+                        <li>財報評分異動時調整</li>
+                        <li>產業趨勢變化應對</li>
+                        <li>市場條件變動因應</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>五、五年期投資預期表現 (2025/8-2030/8)</h2>
+            
+            <div class="highlight">
+                <h3>🎯 投資目標設定</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 15px;">
+                    <div style="text-align: center;">
+                        <h4>年化報酬率</h4>
+                        <div style="font-size: 2em; font-weight: bold;">8-12%</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <h4>五年總報酬</h4>
+                        <div style="font-size: 2em; font-weight: bold;">40-60%</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <h4>初始投資</h4>
+                        <div style="font-size: 2em; font-weight: bold;">5,000萬</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>投資組合價值成長預測 (2025/8-2030/8)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>年度報酬率預期範圍</h3>
+                <div class="chart-wrapper">
+                    <canvas id="returnRangeChart"></canvas>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>💰 保守情境 (年化8%)</h3>
+                    <p><strong>2026年8月：</strong>5,400萬元 (+8%)</p>
+                    <p><strong>2027年8月：</strong>5,832萬元 (+16.6%)</p>
+                    <p><strong>2028年8月：</strong>6,299萬元 (+26%)</p>
+                    <p><strong>2029年8月：</strong>6,803萬元 (+36%)</p>
+                    <p><strong>2030年8月：</strong>7,347萬元 (+47%)</p>
+                </div>
+                <div class="info-card">
+                    <h3>📈 樂觀情境 (年化12%)</h3>
+                    <p><strong>2026年8月：</strong>5,600萬元 (+12%)</p>
+                    <p><strong>2027年8月：</strong>6,272萬元 (+25.4%)</p>
+                    <p><strong>2028年8月：</strong>7,025萬元 (+40.5%)</p>
+                    <p><strong>2029年8月：</strong>7,868萬元 (+57.4%)</p>
+                    <p><strong>2030年8月：</strong>8,812萬元 (+76.2%)</p>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>累積獲利分析</h3>
+                <div class="chart-wrapper">
+                    <canvas id="profitAnalysisChart"></canvas>
+                </div>
+            </div>
+
+            <div class="risk-analysis">
+                <h3>📊 預期表現重點分析</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                    <div>
+                        <h4>🎯 報酬率目標合理性</h4>
+                        <ul>
+                            <li>台股長期平均報酬約8-10%</li>
+                            <li>上櫃興櫃具成長潛力溢價</li>
+                            <li>優質財報標的超額報酬</li>
+                            <li>產業趨勢帶動成長動能</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>⚖️ 風險與報酬平衡</h4>
+                        <ul>
+                            <li>三大產業分散配置</li>
+                            <li>4分股票提供穩定基礎</li>
+                            <li>3分股票增加成長彈性</li>
+                            <li>定期檢視調整機制</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>六、執行時程建議</h2>
+            
+            <div class="chart-container">
+                <h3>分批進場時程規劃</h3>
+                <div class="chart-wrapper">
+                    <canvas id="timelineChart"></canvas>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>📅 執行建議</h3>
+                <p><strong>第1-3個月：</strong>建立核心部位（4分標的優先）</p>
+                <p><strong>第4-6個月：</strong>完成3分標的配置</p>
+                <p><strong>第7-12個月：</strong>觀察調整，優化配置</p>
+                <p><strong>第2-5年：</strong>定期再平衡，動態調整</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 產業配置圓餅圖
+        const industryCtx = document.getElementById('industryChart').getContext('2d');
+        new Chart(industryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['科技產業', '綠能產業', '民生消費'],
+                datasets: [{
+                    data: [50, 30, 20],
+                    backgroundColor: ['#3498db', '#2ecc71', '#e74c3c'],
+                    borderWidth: 3,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            font: { size: 14 }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 投資配置圓餅圖
+        const allocationCtx = document.getElementById('allocationChart').getContext('2d');
+        new Chart(allocationCtx, {
+            type: 'pie',
+            data: {
+                labels: ['元太科技(20%)', '崑鼎(20%)', '中華食(20%)', '宜鼎(10%)', '旺矽(10%)', '友輝(10%)', '德麥(10%)'],
+                datasets: [{
+                    data: [20, 20, 20, 10, 10, 10, 10],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384'],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            padding: 15,
+                            font: { size: 12 }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 投資金額長條圖
+        const amountCtx = document.getElementById('amountChart').getContext('2d');
+        new Chart(amountCtx, {
+            type: 'bar',
+            data: {
+                labels: ['元太科技', '崑鼎', '中華食', '宜鼎', '旺矽', '友輝', '德麥'],
+                datasets: [{
+                    label: '投資金額 (萬元)',
+                    data: [1000, 1000, 1000, 500, 500, 500, 500],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384'],
+                    borderColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '投資金額 (萬元)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // 五年期投資表現預測圖
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: ['2025/8', '2026/8', '2027/8', '2028/8', '2029/8', '2030/8'],
+                datasets: [
+                    {
+                        label: '保守情境 (8%年化)',
+                        data: [5000, 5400, 5832, 6299, 6803, 7347],
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.4
+                    },
+                    {
+                        label: '目標情境 (10%年化)',
+                        data: [5000, 5500, 6050, 6655, 7321, 8053],
+                        borderColor: '#2ecc71',
+                        backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.4
+                    },
+                    {
+                        label: '樂觀情境 (12%年化)',
+                        data: [5000, 5600, 6272, 7025, 7868, 8812],
+                        borderColor: '#e74c3c',
+                        backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 4500,
+                        title: {
+                            display: true,
+                            text: '投資組合價值 (萬元)'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString() + '萬';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y.toLocaleString() + '萬元';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 年度報酬率範圍圖
+        const returnRangeCtx = document.getElementById('returnRangeChart').getContext('2d');
+        new Chart(returnRangeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['2026', '2027', '2028', '2029', '2030'],
+                datasets: [
+                    {
+                        label: '保守預期 (8%)',
+                        data: [8, 8, 8, 8, 8],
+                        backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                        borderColor: '#3498db',
+                        borderWidth: 2
+                    },
+                    {
+                        label: '目標預期 (10%)',
+                        data: [10, 10, 10, 10, 10],
+                        backgroundColor: 'rgba(46, 204, 113, 0.7)',
+                        borderColor: '#2ecc71',
+                        borderWidth: 2
+                    },
+                    {
+                        label: '樂觀預期 (12%)',
+                        data: [12, 12, 12, 12, 12],
+                        backgroundColor: 'rgba(231, 76, 60, 0.7)',
+                        borderColor: '#e74c3c',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 15,
+                        title: {
+                            display: true,
+                            text: '年化報酬率 (%)'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+
+        // 累積獲利分析圖
+        const profitAnalysisCtx = document.getElementById('profitAnalysisChart').getContext('2d');
+        new Chart(profitAnalysisCtx, {
+            type: 'bar',
+            data: {
+                labels: ['保守情境', '目標情境', '樂觀情境'],
+                datasets: [
+                    {
+                        label: '初始投資',
+                        data: [5000, 5000, 5000],
+                        backgroundColor: 'rgba(149, 165, 166, 0.7)',
+                        borderColor: '#95a5a6',
+                        borderWidth: 2
+                    },
+                    {
+                        label: '五年後總價值',
+                        data: [7347, 8053, 8812],
+                        backgroundColor: 'rgba(46, 204, 113, 0.7)',
+                        borderColor: '#2ecc71',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '投資價值 (萬元)'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString() + '萬';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            afterLabel: function(context) {
+                                if (context.datasetIndex === 1) {
+                                    const profit = context.parsed.y - 5000;
+                                    const returnRate = ((profit / 5000) * 100).toFixed(1);
+                                    return `獲利: ${profit.toLocaleString()}萬 (${returnRate}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 時程規劃圖
+        const timelineCtx = document.getElementById('timelineChart').getContext('2d');
+        new Chart(timelineCtx, {
+            type: 'line',
+            data: {
+                labels: ['第1個月', '第2個月', '第3個月', '第4個月', '第5個月', '第6個月'],
+                datasets: [{
+                    label: '累積投資比例 (%)',
+                    data: [30, 50, 60, 75, 90, 100],
+                    borderColor: '#3498db',
+                    backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: '累積投資比例 (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
